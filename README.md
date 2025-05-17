@@ -40,7 +40,7 @@
 
 Check your versions:
 
-```bash
+```
 python3 --version
 pip3 --version
 ```
@@ -49,9 +49,9 @@ pip3 --version
 
 ## ▶️ Run (Developer Only)
 
-```bash
+```
 # Clone the repo
-git clone https://github.com/yourname/hyperdirmic.git
+git clone https://github.com/Drucial/hyperdirmic.git
 cd hyperdirmic
 
 # Set up a virtual environment
@@ -72,6 +72,34 @@ This will launch a background watcher and show a tray icon in your macOS menu ba
 
 ---
 
+## 🧪 Installation
+
+You can install **Hyperdirmic** via [Homebrew](https://brew.sh/):
+
+```bash
+brew tap drucial/hyperdirmic
+brew install --cask hyperdirmic
+```
+
+Or manually via `curl` and GitHub releases:
+
+```bash
+curl -L -o Hyperdirmic.zip https://github.com/Drucial/hyperdirmic/releases/download/v0.1.0/Hyperdirmic.zip
+unzip Hyperdirmic.zip -d /Applications
+open /Applications/Hyperdirmic.app
+```
+
+### 🛑 First-Time Launch Instructions
+
+The first time you open the app, macOS may block it:
+
+- Go to **System Settings > Privacy & Security**
+- Scroll to the bottom and click **'Open Anyway'**
+- Confirm that you want to run Hyperdirmic
+
+The app will appear in your menu bar and begin organizing your `Downloads/` folder in real time.
+
+---
 ## ⚙️ Configuration
 
 Current configuration is hardcoded to watch the `~/Downloads` folder and use default subfolders:
@@ -90,79 +118,17 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
 
 ---
 
-## 🛠 Development Roadmap
-
-### ✅ Local Development
-
-- [x] Clone the repo
-- [x] Create a virtualenv
-- [x] Install dependencies
-- [x] Run app using `organizer.py`
-- [x] Test file drops in `~/Downloads/`
-- [x] Verify log output and file movement
-
----
-
-### ✅ macOS `.app` Bundle with `py2app`
-
-- [x] Install `py2app`:
-
-  ```
-  pip install -r requirements-dev.txt
-  ```
-
-- [x] Build the app:
-
-  ```
-  python setup.py py2app
-  ```
-
-- [x] Output: `dist/Hyperdirmic.app`
-
----
-
-### ✅ Create a Homebrew Cask (Once Deployed)
-
-1. [ ] Zip the app bundle:
-
-   ```
-   cd dist
-   zip -r Hyperdirmic.zip Hyperdirmic.app
-   ```
-
-2. [ ] Calculate the SHA256 hash:
-
-   ```
-   shasum -a 256 Hyperdirmic.zip
-   ```
-
-3. [ ] Create a GitHub release and upload the `.zip`
-
-4. [ ] In your `homebrew-hyperdirmic` tap:
-
-   - [ ] Create `Casks/hyperdirmic.rb` formula
-   - [ ] Fill in metadata and hash
-
-5. [ ] Test with:
-
-   ```
-   brew tap yourname/hyperdirmic
-   brew install --cask hyperdirmic
-   ```
-
----
-
 ## 🎯 Future Enhancements (Roadmap)
 
 These are planned or potential features for upcoming versions of Hyperdirmic.
 
 ### 📦 Packaging & Distribution
 
-- [ ] Build signed `.app` with py2app (or switch to Platypus if needed)
-- [ ] Zip for GitHub releases
-- [ ] Homebrew Cask support:
-  - Create `homebrew-hyperdirmic` tap
-  - `brew install --cask hyperdirmic`
+- [x] Build signed `.app` with py2app
+- [x] Zip for GitHub releases
+- [x] Homebrew Cask support:
+  - [x] Create `homebrew-hyperdirmic` tap
+  - [x] `brew install --cask hyperdirmic`
 
 ---
 
@@ -172,8 +138,8 @@ These are planned or potential features for upcoming versions of Hyperdirmic.
 - [x] Classification by MIME type with fallback support
 - [x] Safe file moving with error handling
 - [x] Persistent logging to `~/Library/Logs/Hyperdirmic`
-- [ ] Optional log rotation or truncation strategy
 - [x] Add support for handling `.part` or temp download files more gracefully
+- [ ] Optional log rotation or truncation strategy
 - [ ] Add more granular logging levels (INFO, DEBUG, WARNING)
 
 ---
@@ -196,6 +162,8 @@ These are planned or potential features for upcoming versions of Hyperdirmic.
 - [ ] Periodic summary of organization (e.g. "You organized 22 files this week!")
 - [ ] iCloud Downloads folder support
 
+---
+
 ## 📄 License
 
 MIT
@@ -208,3 +176,7 @@ Because it's like a **hypodermic needle**... but for **directories**.
 It injects **organization** right into the **veins** of your file system.
 
 🤓💉📂
+
+---
+
+_Last updated: 2025-05-17_

@@ -1,23 +1,31 @@
 #!/bin/bash
-
 set -e
 
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DIST_DIR="$PROJECT_ROOT/dist"
 APP_NAME="Hyperdirmic"
-APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
-VERSION=$(grep -oE "[0-9]+\.[0-9]+\.[0-9]+" "$PROJECT_ROOT/setup.py" | head -n 1)
-ZIP_FILE="$DIST_DIR/${APP_NAME}-v$VERSION.zip"
+DIST_DIR="dist"
+APP_PATH="$DIST_DIR/$APP_NAME.app"
+ZIP_NAME="$APP_NAME.zip"
+ZIP_PATH="$DIST_DIR/$ZIP_NAME"
 
-echo "📦 Packaging $APP_NAME v$VERSION..."
-
-if [ ! -d "$APP_BUNDLE" ]; then
-  echo "❌ Build not found. Run ./bin/build first."
-  exit 1
+# Ensure build exists
+if [ ! -d "$APP_PATH" ]; then
+  echo "⚙️  No .app found — running bin/build first..."
+  ./bin/build
 fi
 
-echo "🗜️  Zipping $APP_BUNDLE to $ZIP_FILE..."
-cd "$DIST_DIR"
-zip -r "$ZIP_FILE" "$APP_NAME.app" > /dev/null
+echo "📦 Packaging $APP_NAME..."
 
-echo "✅ Package created at: $ZIP_FILE"
+# Clean existing zip if any
+rm -f "$ZIP_PATH"
+
+# Zip the .app bundle
+echo "🗜️  Creating ZIP archive..."
+cd "$DIST_DIR"
+zip -r "$ZIP_NAME" "$APP_NAME.app" > /dev/null
+cd ..
+
+# Generate SHA256
+echo "🔐 SHA256 checksum:"
+shasum -a 256 "$ZIP_PATH"
+
+echo "✅ Package complete: $ZIP_PATH"
