@@ -94,9 +94,9 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
 
 ### ✅ Local Development
 
-- [ ] Clone the repo
-- [ ] Create a virtualenv
-- [ ] Install dependencies
+- [x] Clone the repo
+- [x] Create a virtualenv
+- [x] Install dependencies
 - [ ] Run app using `organizer.py`
 - [ ] Test file drops in `~/Downloads/`
 - [ ] Verify log output and file movement
@@ -105,7 +105,7 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
 
 ### ✅ macOS `.app` Bundle with `py2app`
 
-- [ ] Install `py2app`:
+- [x] Install `py2app`:
 
   ```
   pip install -r requirements-dev.txt

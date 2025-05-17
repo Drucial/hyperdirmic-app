@@ -1,0 +1,88 @@
+#!/bin/bash
+
+DOWNLOADS_DIR="$HOME/Downloads"
+TEST_PREFIX="hyperdirmic_test_"
+
+declare -a file_types=(
+  # Images
+  "sample.jpg"
+  "sample.jpeg"
+  "sample.png"
+  "sample.gif"
+  "sample.svg"
+  "sample.bmp"
+  "sample.webp"
+
+  # Documents
+  "doc.pdf"
+  "doc.txt"
+  "doc.docx"
+  "doc.md"
+  "doc.rtf"
+  "doc.odt"
+  "data.csv"
+  "sheet.xls"
+  "slides.ppt"
+
+  # Archives
+  "archive.zip"
+  "archive.tar"
+  "archive.gz"
+  "archive.rar"
+  "archive.7z"
+  "archive.bz2"
+  "archive.xz"
+  "installer.dmg"
+
+  # Audio
+  "sound.mp3"
+  "sound.wav"
+  "sound.aac"
+  "sound.ogg"
+  "sound.flac"
+  "sound.m4a"
+
+  # Video
+  "video.mp4"
+  "video.mov"
+  "video.avi"
+  "video.mkv"
+  "video.webm"
+  "video.wmv"
+
+  # Apps
+  "app.pkg"
+  "app.app"
+  "app.exe"
+  "app.deb"
+  "app.msi"
+
+  # Code files
+  "script.py"
+  "script.js"
+  "markup.html"
+  "style.css"
+  "script.sh"
+  "program.c"
+  "program.cpp"
+  "program.java"
+  "types.ts"
+  "config.json"
+
+  # Edge cases
+  "dotfile.DS_Store"
+  "tempfile.tmp"
+  "logfile.log"
+  "backup.bak"
+  "mystery" # no extension
+)
+
+echo "📁 Seeding ${#file_types[@]} test files into $DOWNLOADS_DIR..."
+
+for filename in "${file_types[@]}"; do
+  filepath="$DOWNLOADS_DIR/$TEST_PREFIX$filename"
+  echo "This is a dummy file for $filename" > "$filepath"
+  echo "✅ Created $filepath"
+done
+
+echo "🧪 Done seeding. Hyperdirmic should now go to town."

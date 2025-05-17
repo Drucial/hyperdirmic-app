@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DOWNLOADS_DIR="$HOME/Downloads"
+TEST_PREFIX="hyperdirmic_test_"
+
+echo "🧹 Cleaning up test files from $DOWNLOADS_DIR..."
+
+find "$DOWNLOADS_DIR" -name "${TEST_PREFIX}*" -type f -delete
+
+echo "✅ Done."
