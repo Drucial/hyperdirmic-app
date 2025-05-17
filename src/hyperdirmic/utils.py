@@ -81,18 +81,36 @@ def set_folder_icon(directory_path: str, icon_path: str) -> bool:
     
     return success
 
+def is_temp_file(file_path: Path) -> bool:
+    return file_path.suffix.lower() in [".part", ".crdownload", ".tmp", ".download"]
+
 def safe_move_file(file_path: Path, dest_dir: Path):
+
+    if is_temp_file(file_path):
+        logger.info(f"🔍 Skipping temp file: {file_path.name}")
+        return
+
     is_new_folder = not dest_dir.exists()
     dest_dir.mkdir(exist_ok=True)
+
+    # Build the destination path, avoiding name collisions
     dest_path = dest_dir / file_path.name
+    if dest_path.exists():
+        stem = file_path.stem
+        suffix = file_path.suffix
+        counter = 1
+
+        while dest_path.exists():
+            dest_path = dest_dir / f"{stem} ({counter}){suffix}"
+            counter += 1
 
     try:
         shutil.move(str(file_path), str(dest_path))
-        logger.info(f"✅ Moved: {file_path.name} → {dest_dir.name}")
-        print(f"✅ Moved: {file_path.name} → {dest_dir.name}")
+        logger.info(f"✅ Moved: {file_path.name} → {dest_path.name}")
+        print(f"✅ Moved: {file_path.name} → {dest_path.name}")
 
         if is_new_folder:
-            icon_name = FOLDER_ICONS.get(dest_dir.name, "folder_dark.icns")
+            icon_name = FOLDER_ICONS.get(dest_dir.name, "folder_light.icns")
             icon_path = str(ICONS_DIR / icon_name)
             set_folder_icon(str(dest_dir), icon_path)
 

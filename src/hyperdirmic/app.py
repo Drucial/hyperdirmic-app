@@ -3,7 +3,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import time
 
-from hyperdirmic.utils import get_destination_folder, safe_move_file
+from hyperdirmic.utils import get_destination_folder, safe_move_file, is_temp_file, logger
 
 DOWNLOADS_DIR = Path.home() / "Downloads"
 
@@ -21,6 +21,15 @@ class DownloadsHandler(FileSystemEventHandler):
 
         dest_folder = get_destination_folder(file_path)
         safe_move_file(file_path, dest_folder)
+
+    def on_moved(self, event):
+        if not event.is_directory:
+            file_path = Path(event.dest_path)
+            if is_temp_file(file_path):
+                logger.info(f"⏳ Skipping moved temp file: {file_path.name}")
+                return
+            logger.info(f"📦 Detected file move/rename: {file_path.name}")
+            safe_move_file(file_path, get_destination_folder(file_path))
 
 
 def start_watcher():
