@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LOG_FILE="$HOME/Library/Logs/Hyperdirmic/hyperdirmic.log"
+
+if [ -f "$LOG_FILE" ]; then
+  echo "📖 Opening log file at $LOG_FILE..."
+  open -a TextEdit "$LOG_FILE"
+else
+  echo "❌ No log file found at $LOG_FILE"
+fi

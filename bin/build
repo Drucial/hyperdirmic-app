@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+VENV_DIR="$PROJECT_ROOT/venv311"
+PYTHON="$VENV_DIR/bin/python"
+SETUP_SCRIPT="$PROJECT_ROOT/setup.py"
+DIST_DIR="$PROJECT_ROOT/dist"
+APP_NAME="Hyperdirmic"
+APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
+PY311_BIN="/opt/homebrew/bin/python3.11"
+
+echo "🧪 Building $APP_NAME with py2app using Python 3.11..."
+
+# Create venv if missing
+if [ ! -d "$VENV_DIR" ]; then
+  echo "📦 Creating dedicated build virtualenv (Python 3.11)..."
+  "$PY311_BIN" -m venv "$VENV_DIR"
+fi
+
+# Activate virtualenv
+source "$VENV_DIR/bin/activate"
+
+# Install dependencies if needed
+echo "📦 Ensuring build dependencies are installed..."
+pip install --upgrade pip > /dev/null
+pip install -r "$PROJECT_ROOT/requirements.txt" > /dev/null
+pip install py2app > /dev/null
+
+# Clean previous builds
+echo "🧼 Cleaning up previous builds..."
+rm -rf "$PROJECT_ROOT/build" "$DIST_DIR"
+
+# Run py2app
+echo "🚀 Running py2app..."
+$PYTHON "$SETUP_SCRIPT" py2app || echo "⚠️ py2app exited with an error — attempting manual codesign anyway."
+
+# Manual codesign
+if [ -d "$APP_BUNDLE" ]; then
+  echo "🔏 Removing existing (broken) code signature..."
+  codesign --remove-signature "$APP_BUNDLE" || true
+
+  echo "🔏 Re-signing .app bundle manually (adhoc)..."
+  codesign --force --deep --sign - "$APP_BUNDLE"
+
+  echo "✅ Build + codesign complete!"
+  echo "📦 App located at: $APP_BUNDLE"
+  echo "💡 Run: ./bin/start or right-click → Open"
+else
+  echo "❌ Build failed — .app bundle not found."
+  exit 1
+fi
+

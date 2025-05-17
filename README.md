@@ -97,9 +97,9 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
 - [x] Clone the repo
 - [x] Create a virtualenv
 - [x] Install dependencies
-- [ ] Run app using `organizer.py`
-- [ ] Test file drops in `~/Downloads/`
-- [ ] Verify log output and file movement
+- [x] Run app using `organizer.py`
+- [x] Test file drops in `~/Downloads/`
+- [x] Verify log output and file movement
 
 ---
 
@@ -111,13 +111,13 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
   pip install -r requirements-dev.txt
   ```
 
-- [ ] Build the app:
+- [x] Build the app:
 
   ```
   python setup.py py2app
   ```
 
-- [ ] Output: `dist/Hyperdirmic.app`
+- [x] Output: `dist/Hyperdirmic.app`
 
 ---
 
@@ -151,6 +151,60 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
    ```
 
 ---
+
+## 🎯 Future Enhancements (Roadmap)
+
+These are planned or potential features for upcoming versions of Hyperdirmic.
+
+### 🛠️ Core UX Features
+
+- [ ] Preferences menu (UI) to customize:
+  - Folder destinations for each file type
+  - Enable/disable auto-organizing per category
+- [ ] Start automatically on login via macOS `launchd`
+- [ ] Native macOS menubar integration with preferences
+- [ ] Drag-and-drop files onto the tray icon (bonus)
+
+---
+
+### 📦 Packaging & Distribution
+
+- [ ] Build signed `.app` with py2app (or switch to Platypus if needed)
+- [ ] Zip for GitHub releases
+- [ ] Homebrew Cask support:
+  - Create `homebrew-hyperdirmic` tap
+  - `brew install --cask hyperdirmic`
+
+---
+
+### 🧪 Developer & QA Tooling
+
+- [x] `bin/dev` for running in dev mode with auto-venv setup
+- [x] `bin/test-seed` for creating a broad set of test files
+- [x] `bin/cleanup-seed` for wiping generated test files
+- [x] `bin/build` and/or `bin/package` to automate bundling
+- [x] `bin/clear-logs` for dev sanity
+
+---
+
+### 🧼 Internal Functionality Enhancements
+
+- [x] Real-time file system monitoring with `watchdog`
+- [x] Classification by MIME type with fallback support
+- [x] Safe file moving with error handling
+- [x] Persistent logging to `~/Library/Logs/Hyperdirmic`
+- [ ] Optional log rotation or truncation strategy
+- [ ] Add support for handling `.part` or temp download files more gracefully
+- [ ] Add more granular logging levels (INFO, DEBUG, WARNING)
+
+---
+
+### 🧙 Nice-to-Have Ideas
+
+- [ ] GUI for viewing log history (lightweight panel)
+- [ ] Notification system (optional) for file moves
+- [ ] Periodic summary of organization (e.g. "You organized 22 files this week!")
+- [ ] iCloud Downloads folder support
 
 ## 📄 License
 

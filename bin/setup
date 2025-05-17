@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+VENV_DIR="$PROJECT_ROOT/venv"
+PY311_BIN="/opt/homebrew/bin/python3.11"
+
+echo "🚀 Setting up Hyperdirmic dev environment..."
+
+# Check if Python 3.11 is installed
+if ! [ -x "$PY311_BIN" ]; then
+  echo "❌ Python 3.11 not found at $PY311_BIN"
+  echo "💡 Install it using: brew install python@3.11"
+  exit 1
+fi
+
+# Create dev venv
+if [ -d "$VENV_DIR" ]; then
+  echo "♻️  Removing old venv..."
+  rm -rf "$VENV_DIR"
+fi
+
+echo "📦 Creating virtualenv with Python 3.11..."
+"$PY311_BIN" -m venv "$VENV_DIR"
+
+# Activate and install dependencies
+source "$VENV_DIR/bin/activate"
+echo "📦 Installing requirements..."
+pip install --upgrade pip > /dev/null
+pip install -r "$PROJECT_ROOT/requirements.txt" > /dev/null
+
+echo "✅ Dev environment ready."
+
+# Optional: test launch
+echo "🧪 Verifying the app launches..."
+"$VENV_DIR/bin/python" "$PROJECT_ROOT/src/organizer.py" &
+sleep 2
+kill $! 2> /dev/null || true
+
+echo "🏁 Setup complete. Run the app with: ./bin/dev"

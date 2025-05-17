@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DIST_DIR="$PROJECT_ROOT/dist"
+APP_NAME="Hyperdirmic"
+APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
+VERSION=$(grep -oE "[0-9]+\.[0-9]+\.[0-9]+" "$PROJECT_ROOT/setup.py" | head -n 1)
+ZIP_FILE="$DIST_DIR/${APP_NAME}-v$VERSION.zip"
+
+echo "📦 Packaging $APP_NAME v$VERSION..."
+
+if [ ! -d "$APP_BUNDLE" ]; then
+  echo "❌ Build not found. Run ./bin/build first."
+  exit 1
+fi
+
+echo "🗜️  Zipping $APP_BUNDLE to $ZIP_FILE..."
+cd "$DIST_DIR"
+zip -r "$ZIP_FILE" "$APP_NAME.app" > /dev/null
+
+echo "✅ Package created at: $ZIP_FILE"

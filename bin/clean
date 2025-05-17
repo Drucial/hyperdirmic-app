@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DIST_DIR="$PROJECT_ROOT/dist"
+BUILD_DIR="$PROJECT_ROOT/build"
+VENV_DIR="$PROJECT_ROOT/venv311"
+DEV_VENV_DIR="$PROJECT_ROOT/venv"
+LOG_DIR="$PROJECT_ROOT/logs"
+
+echo "🧹 Cleaning Hyperdirmic build environment..."
+
+if [ -d "$DIST_DIR" ]; then
+  echo "🗑️  Removing dist/"
+  rm -rf "$DIST_DIR"
+fi
+
+if [ -d "$BUILD_DIR" ]; then
+  echo "🗑️  Removing build/"
+  rm -rf "$BUILD_DIR"
+fi
+
+if [ -d "$VENV_DIR" ]; then
+  echo "🗑️  Removing build virtualenv (venv311/)"
+  rm -rf "$VENV_DIR"
+fi
+
+if [ -d "$DEV_VENV_DIR" ]; then
+  echo "🗑️  Removing dev virtualenv (venv/)"
+  rm -rf "$DEV_VENV_DIR"
+fi
+
+if [ -d "$LOG_DIR" ]; then
+  echo "🗑️  Removing logs/"
+  rm -rf "$LOG_DIR"
+fi
+
+echo "🗑️  Removing temp logs from /tmp/"
+rm -f /tmp/hyperdirmic*.log
+
+echo "✅ Clean complete."

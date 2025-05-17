@@ -18,6 +18,9 @@ logging.basicConfig(
     format='[%(asctime)s] %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
 )
+
+logger = logging.getLogger(__name__)
+
 # Mapping of MIME types or top-level types to folder names
 FILE_DESTINATIONS = {
     "image": "Images",
@@ -34,17 +37,20 @@ FILE_DESTINATIONS = {
 
 
 def get_destination_folder(file_path: Path) -> Path:
+    logger.info(f"🔍 Getting destination folder for {file_path.name}")
     mime_type, _ = mimetypes.guess_type(file_path.name)
-
+    logger.info(f"🔍 Mime type: {mime_type}")
     if not mime_type:
+        logger.info("�� No mime type found, using Other")
         return DOWNLOADS_DIR / "Other"
 
     # Try full match, then fallback to top-level type
+    logger.info(f"🔍 Trying full match: {mime_type}")
     folder_name = FILE_DESTINATIONS.get(
         mime_type,
         FILE_DESTINATIONS.get(mime_type.split("/")[0], "Other"),
     )
-
+    logger.info(f"🔍 Folder name: {folder_name}")
     return DOWNLOADS_DIR / folder_name
 
 
@@ -54,6 +60,8 @@ def safe_move_file(file_path: Path, dest_dir: Path):
 
     try:
         shutil.move(str(file_path), str(dest_path))
+        logger.info(f"✅ Moved: {file_path.name} → {dest_dir.name}")
         print(f"✅ Moved: {file_path.name} → {dest_dir.name}")
     except Exception as e:
+        logger.error(f"❌ Failed to move {file_path.name}: {e}")
         print(f"❌ Failed to move {file_path.name}: {e}")

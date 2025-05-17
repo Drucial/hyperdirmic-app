@@ -1,20 +1,27 @@
 from setuptools import setup
 
 APP = ['src/organizer.py']
-DATA_FILES = ['icon.icns']  # Only if you plan to use it as the app icon
+DATA_FILES = ['icon.icns']
 OPTIONS = {
-    'argv_emulation': True,
-    'iconfile': 'icon.icns',  # Comment this out if you're not using a custom icon
-    'packages': ['watchdog', 'pystray', 'PIL'],
-    'includes': ['watchdog.observers', 'watchdog.events'],
+    'argv_emulation': False,
+    'iconfile': 'icon.icns',
+    'packages': ['rumps', 'watchdog', 'objc'],
+    'includes': [
+        'watchdog.observers',
+        'watchdog.events',
+        'Foundation',
+        'AppKit',
+        'imp',  # 👈 THIS is the missing piece
+    ],
     'plist': {
         'CFBundleName': 'Hyperdirmic',
         'CFBundleDisplayName': 'Hyperdirmic',
-        'CFBundleIdentifier': 'com.yourname.hyperdirmic',
+        'CFBundleIdentifier': 'com.drew.hyperdirmic',
         'CFBundleVersion': '0.1.0',
         'CFBundleShortVersionString': '0.1.0',
     },
 }
+
 
 setup(
     app=APP,
