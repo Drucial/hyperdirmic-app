@@ -8,6 +8,7 @@ BUILD_DIR="$PROJECT_ROOT/build"
 VENV_DIR="$PROJECT_ROOT/venv311"
 DEV_VENV_DIR="$PROJECT_ROOT/venv"
 LOG_DIR="$PROJECT_ROOT/logs"
+CACHE_DIR="$PROJECT_ROOT/src/hyperdirmic/__pycache__.py"
 
 echo "🧹 Cleaning Hyperdirmic build environment..."
 
@@ -34,6 +35,11 @@ fi
 if [ -d "$LOG_DIR" ]; then
   echo "🗑️  Removing logs/"
   rm -rf "$LOG_DIR"
+fi
+
+if [ -d "$CACHE_DIR" ]; then
+  echo "🗑️  Removing cache/"
+  rm -rf "$CACHE_DIR"
 fi
 
 echo "🗑️  Removing temp logs from /tmp/"
