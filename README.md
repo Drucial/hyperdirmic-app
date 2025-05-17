@@ -156,17 +156,6 @@ In the future, config will be stored in `~/Library/Application Support/Hyperdirm
 
 These are planned or potential features for upcoming versions of Hyperdirmic.
 
-### 🛠️ Core UX Features
-
-- [ ] Preferences menu (UI) to customize:
-  - Folder destinations for each file type
-  - Enable/disable auto-organizing per category
-- [ ] Start automatically on login via macOS `launchd`
-- [ ] Native macOS menubar integration with preferences
-- [ ] Drag-and-drop files onto the tray icon (bonus)
-
----
-
 ### 📦 Packaging & Distribution
 
 - [ ] Build signed `.app` with py2app (or switch to Platypus if needed)
@@ -177,16 +166,6 @@ These are planned or potential features for upcoming versions of Hyperdirmic.
 
 ---
 
-### 🧪 Developer & QA Tooling
-
-- [x] `bin/dev` for running in dev mode with auto-venv setup
-- [x] `bin/test-seed` for creating a broad set of test files
-- [x] `bin/cleanup-seed` for wiping generated test files
-- [x] `bin/build` and/or `bin/package` to automate bundling
-- [x] `bin/clear-logs` for dev sanity
-
----
-
 ### 🧼 Internal Functionality Enhancements
 
 - [x] Real-time file system monitoring with `watchdog`
@@ -194,8 +173,19 @@ These are planned or potential features for upcoming versions of Hyperdirmic.
 - [x] Safe file moving with error handling
 - [x] Persistent logging to `~/Library/Logs/Hyperdirmic`
 - [ ] Optional log rotation or truncation strategy
-- [ ] Add support for handling `.part` or temp download files more gracefully
+- [x] Add support for handling `.part` or temp download files more gracefully
 - [ ] Add more granular logging levels (INFO, DEBUG, WARNING)
+
+---
+
+### 🛠️ Core UX Features
+
+- [ ] Preferences menu (UI) to customize:
+  - Folder destinations for each file type
+  - Enable/disable auto-organizing per category
+- [ ] Start automatically on login via macOS `launchd`
+- [ ] Native macOS menubar integration with preferences
+- [ ] Drag-and-drop files onto the tray icon (bonus)
 
 ---
 
