@@ -4,7 +4,7 @@ APP = ["src/organizer.py"]
 DATA_FILES = [
     "icon.icns",  # App icon
     ("", ["tray_icon.png"]),  # Tray icon copied into Contents/Resources/
-    ("assets/images", ["assets/images/folder_dark.icns"]),
+    ("", ["folder_dark.icns"]),
 ]
 OPTIONS = {
     "argv_emulation": False,
