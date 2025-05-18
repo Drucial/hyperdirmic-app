@@ -4,6 +4,7 @@ import logging
 import os
 from pathlib import Path
 from Cocoa import NSWorkspace, NSImage
+import sys
 
 # Base folders
 DOWNLOADS_DIR = Path.home() / "Downloads"
@@ -111,9 +112,17 @@ def safe_move_file(file_path: Path, dest_dir: Path):
 
         if is_new_folder:
             icon_name = FOLDER_ICONS.get(dest_dir.name, "folder_light.icns")
-            icon_path = str(ICONS_DIR / icon_name)
+            icon_path = resource_path(icon_name)
             set_folder_icon(str(dest_dir), icon_path)
 
     except Exception as e:
         logger.error(f"❌ Failed to move {file_path.name}: {e}")
         print(f"❌ Failed to move {file_path.name}: {e}")
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    elif getattr(sys, 'frozen', False):
+        return os.path.join(os.environ['RESOURCEPATH'], relative_path)
+    else:
+        return os.path.join(os.path.abspath("."), relative_path)

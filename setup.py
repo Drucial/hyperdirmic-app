@@ -2,9 +2,10 @@ from setuptools import setup
 
 APP = ["src/organizer.py"]
 DATA_FILES = [
-    "icon.icns",  # App icon
-    ("", ["tray_icon.png"]),  # Tray icon copied into Contents/Resources/
-    ("", ["folder_dark.icns"]),
+    "icon.icns",  # App icon (goes to Resources)
+    ("", ["tray_icon.png"]),  # tray_icon.png goes to Resources
+    ("", ["src/assets/images/folder_dark.icns"]),  # folder_dark.icns goes to Resources
+    # Add more icons here if needed, e.g. ("", ["folder_light.icns"])
 ]
 OPTIONS = {
     "argv_emulation": False,
