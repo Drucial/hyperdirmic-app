@@ -96,6 +96,8 @@ def safe_move_file(file_path: Path, dest_dir: Path):
 
     # Build the destination path, avoiding name collisions
     dest_path = dest_dir / file_path.name
+    
+    # Only rename if there's an actual collision
     if dest_path.exists():
         stem = file_path.stem
         suffix = file_path.suffix

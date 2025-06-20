@@ -28,8 +28,15 @@ class DownloadsHandler(FileSystemEventHandler):
             if is_temp_file(file_path):
                 logger.info(f"⏳ Skipping moved temp file: {file_path.name}")
                 return
+            
+            # Check if the file is already in its correct destination
+            dest_folder = get_destination_folder(file_path)
+            if file_path.parent.resolve() == dest_folder.resolve():
+                logger.info(f"✅ File {file_path.name} already in correct location, skipping")
+                return
+                
             logger.info(f"📦 Detected file move/rename: {file_path.name}")
-            safe_move_file(file_path, get_destination_folder(file_path))
+            safe_move_file(file_path, dest_folder)
 
 
 def start_watcher():
