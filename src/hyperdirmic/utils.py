@@ -32,7 +32,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='[%(asctime)s] %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
-)
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +52,13 @@ FILE_DESTINATIONS = {
 
 def get_destination_folder(file_path: Path) -> Path:
     logger.info(f"🔍 Getting destination folder for {file_path.name}")
+
+    # Direct extension check for installer files
+    installer_extensions = [".dmg", ".pkg", ".mpkg", ".app", ".exe", ".msi"]
+    if file_path.suffix.lower() in installer_extensions:
+        logger.info(f"📁 Detected installer file by extension ({file_path.suffix}), using 'Applications'")
+        return DOWNLOADS_DIR / "Applications"
+
     mime_type, _ = mimetypes.guess_type(file_path.name)
     logger.info(f"🔍 Mime type: {mime_type}")
     if not mime_type:
@@ -127,4 +134,5 @@ def resource_path(relative_path):
     elif getattr(sys, 'frozen', False):
         return os.path.join(os.environ['RESOURCEPATH'], relative_path)
     else:
-        return os.path.join(os.path.abspath("."), relative_path)
+        # In development mode, look in src/assets/images
+        return os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "images", relative_path)
